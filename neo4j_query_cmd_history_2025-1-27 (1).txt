@@ -1,3 +1,91 @@
+MATCH(u:User)-[:FRIEND] -(f:User) RETURN u.name ,COUNT(f) AS nofriend ORDER BY nofriend DESC;
+
+MATCH(u:User)-[:FRIEND] -(f:User);
+
+MATCH(u:User)-[:FRIEND] -(f:User) return f.name;
+
+MATCH(u:User)->[:FRIENDS] (p:User);
+
+MATCH(u:User{name:"John"})-[:PS];
+
+MATCH p=()-[:LIKES]->() RETURN p LIMIT 25;
+
+MATCH (U:User{name:'John'}) -[:POSTED] ->(p:Post) return p.content;
+
+MATCH (U:User{name:'John'}) -[:LIKES] -(f:User) RETURN f.name;
+
+MATCH p=()-[:LIKES]->() RETURN p LIMIT 25;
+
+MATCH (U:User{name:'John'}) -[:FRIEND] -(f:User) -[:POSTED] ->(p:Post) RETURN f.name,p.content;
+
+MATCH (U:User{name:'John'}) -[:FRIEND] -(f:User) RETURN f.name;
+
+MATCH (U:User{name:'John'}) -[:FRIEND] -(f:User);
+
+MATCH p=()-[:FRIEND]->() RETURN p LIMIT 25;
+
+MATCH (U:User{name:'John'}) -[:FRIEND] -(f:User) RETURN f.name;
+
+MATCH (p:Post) RETURN p;
+
+MATCH (n:Post) RETURN n LIMIT 25;
+
+MATCH (u:User) RETURN u;
+
+MATCH p=()-[:LIKES]->() RETURN p LIMIT 25;
+
+MATCH p=()-[:FRIEND]->() RETURN p LIMIT 25;
+
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv" as row
+MATCH (u1:User {userId: toInteger(row.userId1)}), (u2:User {userId: toInteger(row.userId2)})
+CREATE (u1)-[:FRIEND]->(u2)
+CREATE (u1)-[:LIKES]->(u2);
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv' AS row MATCH(u1:User{userId:toInteger(row.userId)}), (u2:User{userId:toInteger(row.userId)}) CREATE (u1) -[:FRIEND]->(u2) CREATE (u1) -[:LIKES]->(u2);
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv' AS row MATCH(u1:User{userId:toInteger(row.userId)}), (u2:User{userId:toInteger(row.userId)}) CREATE (u1) -[:FRIEND]->(u2) CREATE (u1) -[:LIKES]->(u2);
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv' AS row MATCH(u1:User{userId:toInteger(row.userId)}), (u2:User{userId:toInteger(row.userId)}) CREATE (u1) -[:FRIEND]->(u2);
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv' AS row;
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/relationships.csv' AS row;
+
+MATCH p=()-[:POSTED]->() RETURN p LIMIT 25;
+
+LOAD CSV WITH HEADERS From "https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/posts.csv" as row 
+MATCH (u:User {userId:toInteger(row.userId)})
+CREATE (u)-[:POSTED]->(:Post{postId:toInteger(row.postId),content:row.content,timestamp:datetime(row.timestamp)});
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/posts.csv' as row 
+MATCH (u:User{userId:toInteger(row.userId)})    
+CREATE (u) -[:POSTED]->(:Post{PostID:toInteger(row:PostId),content:row.content,timestamp:datetime(row.timestamp)});
+
+MATCH (n:User) RETURN n LIMIT 25;
+
+MATCH (n:User) RETURN n LIMIT 25;
+
+MATCH (n:User) RETURN n LIMIT 25;
+
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/krishnaik06/graph-dataset/main/users_social.csv' AS row
+CREATE (:User{userId:toInteger(row.userId),name:row.name,age:toInteger(row.age),city:row.city});
+
+LOAD CSV WITH HEADERS FROM 'https://github.com/krishnaik06/graph-dataset/blob/main/users_social.csv' AS row 
+CREATE(:User{UserId:toInteger(row.userID),name:row.name,age:toInteger(row.age),city:row.city});
+
+LOAD CSV WITH HEADERS FROM 'https://github.com/krishnaik06/graph-dataset/blob/main/users_social.csv' AS row 
+CREATE(:User{UserId:toInteger(row.userID),name:row.name,age:toInteger(row.age),city:row.city});
+
+LOAD CSV WITH HEADERS FROM 'https://github.com/krishnaik06/graph-dataset/blob/main/users_social.csv' AS row 
+CREATE(:User);
+
+LOAD CSV WITH HEADERS FROM 'https://github.com/krishnaik06/graph-dataset/blob/main/users_social.csv' AS row
+CREATE (:User);
+
+LOAD CSV WITH HEADERS FROM '' AS row;
+
+LOAD;
+
 MATCH (x: PERSON{name:'Tarun'}) SET x.born=2003 return x;
 
 MATCH (x: PERSON) SET x.born=1989 return x;
